@@ -16,10 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
+from restapi import views as api_views
+from rest_framework import routers
+
+api_router = routers.DefaultRouter()
+api_router.register(r'links', api_views.LinkViewSet, basename='links')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(api_router.urls)),
+    path('api/followed/', api_views.FollowedView.as_view()),
+    path('api/followed/<int:user_id>/',
+         api_views.DeleteFollowedView.as_view()),
     path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('djoser.urls.authtoken')),
     path('api-auth/', include('rest_framework.urls')),
 ]
 

@@ -15,4 +15,4 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 class User(AbstractUser):
     followed_users = models.ManyToManyField(to='self',
                                             symmetrical=False,
-                                            related_name='following_users')
+                                            related_name='fans')

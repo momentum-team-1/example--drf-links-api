@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'djoser',
     'taggit',
     'ordered_model',
+    'corsheaders',
 
     # Project-specific
     'users',
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -148,3 +150,16 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+    'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE':
+    10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
