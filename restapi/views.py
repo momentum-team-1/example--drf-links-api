@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from rest_framework import views, viewsets, permissions, pagination
+from django.shortcuts import render, get_object_or_404
+from rest_framework import views, viewsets, permissions, pagination, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -60,4 +60,6 @@ class DeleteFollowedView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def delete(self, request, user_id, format=None):
-        return Response(status=204)
+        user = get_object_or_404(User, id=user_id)
+        request.user.followed_users.remove(user)
+        return Response(status=status.HTTP_204_NO_CONTENT)
